@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,6 +10,14 @@
     <WebView
         android:id="@+id/wbvw"
         android:layout_width="match_parent"
-        android:layout_height="500dp"/>
+        android:layout_height="match_parent"
+        android:visibility="visible" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/tv_wltishi"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="网络无法连接,请检查网络"
+        android:visibility="gone" />
+
+</RelativeLayout>
