@@ -10,8 +10,11 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import java.util.Timer;
@@ -101,6 +104,35 @@ public class MainActivity extends AppCompatActivity {
 
 //        webView.clearHistory();
 
+//        webView.getSettings().setBlockNetworkImage(false);//是否阻止图片网络数据
+
+
+//
+//        webView.getSettings().setPluginsEnabled(true);
+//        webView.getSettings().setSaveFormData(false);
+//        webView.refreshPlugins(true);
+//        webView.getSettings().setLoadsImagesAutomatically(true);
+
+
+
+        /* 设置缓存模式,我这里使用的默认 */
+//        webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        /* 大部分网页需要自己保存一些数据,这个时候就的设置下面这个属性 */
+//        webView.getSettings().setDomStorageEnabled(true);
+        /* HTML5的地理位置服务,设置为true,启用地理定位 */
+//        webView.getSettings().setGeolocationEnabled(true);
+        /* 提高网页渲染的优先级 */
+//        webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
+        /* 设置显示水平滚动条,就是网页右边的滚动条.我这里设置的不显示 */
+//        webView.setHorizontalScrollBarEnabled(false);
+        /* 指定垂直滚动条是否有叠加样式 */
+//        webView.setVerticalScrollbarOverlay(true);
+        /* 设置滚动条的样式 */
+//        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+        /* 这个不用说了,重写WebChromeClient监听网页加载的进度,从而实现进度条 */
+//        webView.setWebChromeClient(new WebChromeClient());
+        /* 同上,重写WebViewClient可以监听网页的跳转和资源加载等等... */
+        webView.setWebViewClient(new WebViewClient());
 
         webView.loadUrl("http://rhs.merrytextech.com/business-intelligence/yyksh/bi/view/8c02c9130ceb4a5f0bb2977fd6d6c660");
 
@@ -138,4 +170,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_menu_1:
+                webView.clearHistory();
+                webView.loadUrl("http://rhs.merrytextech.com/business-intelligence/yyksh/bi/view/8c02c9130ceb4a5f0bb2977fd6d6c660");
+                break;
+            case R.id.action_menu_2:
+                webView.clearHistory();
+                webView.loadUrl("http://rhs.merrytextech.com/business-intelligence/yyksh/bi/view/20fd4b0c74be55825f3564940e0f9436");
+                break;
+            case R.id.action_menu_3:
+                webView.clearHistory();
+                webView.loadUrl("http://rhs.merrytextech.com/business-intelligence/zcksh/bi/view/1c75d6975dedf3a750252c7c30b986ee");
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        webView.clearHistory();
+        webView.destroy();
+    }
 }
