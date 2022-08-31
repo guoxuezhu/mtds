@@ -33,21 +33,21 @@ public class MainActivity extends AppCompatActivity {
 
     private Timer timer;
     private int count = 0;
-    private Handler mhandler = new Handler() {
+    private Handler mhandler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
+        public boolean handleMessage(@NonNull Message message) {
+            switch (message.what) {
                 case 1122:
+                    setView_Web();
                     initview();
                     break;
                 case 1123:
-                    setView();
+                    setView_tv();
                     break;
             }
+            return false;
         }
-    };
-
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,23 +65,27 @@ public class MainActivity extends AppCompatActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                count++;
-                if (count > 6) {
-                    mhandler.sendEmptyMessage(1123);
+                if (isNetworkAvailable(MainActivity.this)) {
+                    mhandler.sendEmptyMessage(1122);
                     stoptimer();
                 } else {
-                    if (isNetworkAvailable(MainActivity.this)) {
-                        mhandler.sendEmptyMessage(1122);
-                        stoptimer();
+                    count++;
+                    if (count > 6) {
+                        mhandler.sendEmptyMessage(1123);
                     }
                 }
             }
-        }, 10, 1 * 60 * 1000);
+        }, 10, 5 * 1000);
     }
 
-    private void setView() {
+    private void setView_tv() {
         webView.setVisibility(View.GONE);
         tv_wltishi.setVisibility(View.VISIBLE);
+    }
+
+    private void setView_Web() {
+        webView.setVisibility(View.VISIBLE);
+        tv_wltishi.setVisibility(View.GONE);
     }
 
     private void stoptimer() {
@@ -203,5 +207,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         webView.clearHistory();
         webView.destroy();
+        mhandler.removeCallbacksAndMessages(null);
+        mhandler = null;
     }
 }
