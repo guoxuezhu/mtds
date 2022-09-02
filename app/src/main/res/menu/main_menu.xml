@@ -7,16 +7,16 @@
     <item
         android:id="@+id/action_menu_1"
         android:orderInCategory="100"
-        android:title="menu1"
+        android:title="仁护生医院布草入厂数量可视化大屏"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_menu_2"
         android:orderInCategory="100"
-        android:title="menu2"
+        android:title="仁护生医院布草洗涤进度可视化大屏"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_menu_3"
         android:orderInCategory="100"
-        android:title="menu3"
+        android:title="仁护生医院布草分布统计可视化大屏"
         app:showAsAction="never" />
 </menu>

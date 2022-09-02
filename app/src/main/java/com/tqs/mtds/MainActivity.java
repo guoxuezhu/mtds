@@ -13,6 +13,7 @@ import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -103,47 +104,17 @@ public class MainActivity extends AppCompatActivity {
         webView.getSettings().setUseWideViewPort(true);//设置此属性，可任意比例缩放。大视图模式
         webView.getSettings().setLoadWithOverviewMode(true);//和setUseWideViewPort(true)一起解决网页自适应问题
         webView.getSettings().setAppCacheEnabled(true);//是否使用缓存
-        webView.getSettings().setDomStorageEnabled(true);//DOM Storage
-//        webView.getSettings().setUserAgentString("User-Agent:Android");//设置用户代理，一般不用
+        webView.getSettings().setDomStorageEnabled(true);//保存一些数据
+        webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);//设置缓存模式,我这里使用的默认
+        webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);//提高网页渲染的优先级
+        webView.getSettings().setDatabaseEnabled(true);
+//        webView.getSettings().setAppCacheMaxSize(1024 * 1024 * 8);//存储的最大容量
+//        String appCachePath = getApplicationContext().getCacheDir().getAbsolutePath();
+//        webView.getSettings().setAppCachePath(appCachePath);
+//        webView.getSettings().setDatabasePath(appCachePath);
 
-//        webView.clearHistory();
-
-//        webView.getSettings().setBlockNetworkImage(false);//是否阻止图片网络数据
-
-
-//
-//        webView.getSettings().setPluginsEnabled(true);
-//        webView.getSettings().setSaveFormData(false);
-//        webView.refreshPlugins(true);
-//        webView.getSettings().setLoadsImagesAutomatically(true);
-
-
-
-        /* 设置缓存模式,我这里使用的默认 */
-//        webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-        /* 大部分网页需要自己保存一些数据,这个时候就的设置下面这个属性 */
-//        webView.getSettings().setDomStorageEnabled(true);
-        /* HTML5的地理位置服务,设置为true,启用地理定位 */
-//        webView.getSettings().setGeolocationEnabled(true);
-        /* 提高网页渲染的优先级 */
-//        webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
-        /* 设置显示水平滚动条,就是网页右边的滚动条.我这里设置的不显示 */
-//        webView.setHorizontalScrollBarEnabled(false);
-        /* 指定垂直滚动条是否有叠加样式 */
-//        webView.setVerticalScrollbarOverlay(true);
-        /* 设置滚动条的样式 */
-//        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-        /* 这个不用说了,重写WebChromeClient监听网页加载的进度,从而实现进度条 */
-//        webView.setWebChromeClient(new WebChromeClient());
-        /* 同上,重写WebViewClient可以监听网页的跳转和资源加载等等... */
         webView.setWebViewClient(new WebViewClient());
-
         webView.loadUrl("http://rhs.merrytextech.com/business-intelligence/yyksh/bi/view/8c02c9130ceb4a5f0bb2977fd6d6c660");
-
-//        webView.loadUrl("http://mtds.texeasy.net:9180/view/7081d9dc8deb445c10fe20955230729d");
-//        webView.loadUrl("http://mtds.texeasy.net:9180/view/75b029390eff9f24769b818af4866017");
-//        webView.loadUrl("http://mtds.texeasy.net:9180/view/c7adc057a9753648edeb75c92f001116");
-//        webView.loadUrl("http://mtds.texeasy.net:9180/view/c9648705d7a770b3f27206025c39fda6");
 
     }
 
@@ -185,18 +156,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_menu_1:
-                webView.clearHistory();
+//                webView.clearHistory();
                 webView.loadUrl("http://rhs.merrytextech.com/business-intelligence/yyksh/bi/view/8c02c9130ceb4a5f0bb2977fd6d6c660");
                 break;
             case R.id.action_menu_2:
-                webView.clearHistory();
+//                webView.clearHistory();
                 webView.loadUrl("http://rhs.merrytextech.com/business-intelligence/yyksh/bi/view/20fd4b0c74be55825f3564940e0f9436");
                 break;
             case R.id.action_menu_3:
-                webView.clearHistory();
+//                webView.clearHistory();
                 webView.loadUrl("http://rhs.merrytextech.com/business-intelligence/zcksh/bi/view/1c75d6975dedf3a750252c7c30b986ee");
                 break;
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -206,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         webView.clearHistory();
+        webView.removeAllViews();
         webView.destroy();
         mhandler.removeCallbacksAndMessages(null);
         mhandler = null;
